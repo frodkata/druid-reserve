@@ -6,6 +6,7 @@ import { clearUser } from "../store/reducer-slices/authSlice";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Logout = () => {
 	const navigate = useNavigate();
@@ -23,13 +24,7 @@ const Logout = () => {
 			});
 	};
 
-	return (
-		<Grid container spacing={5} direction="column" alignItems="center">
-			<Button variant="outlined" color="secondary" onClick={handleLogout}>
-				Log Out
-			</Button>
-		</Grid>
-	);
+	return <LogoutIcon onClick={handleLogout} />;
 };
 
 export default Logout;

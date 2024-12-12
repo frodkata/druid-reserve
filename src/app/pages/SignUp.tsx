@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";
-import { auth } from "../firebaseConfig";
+import { auth } from "../../firebaseConfig";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button, TextField, Box, Typography } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";
-import { auth } from "../firebaseConfig";
-import { setUser } from "../store/reducer-slices/authSlice";
-import { AuthUser } from "../types";
+import { auth } from "../../firebaseConfig";
+import { setUser } from "../../store/reducer-slices/authSlice";
+import { AuthUser } from "../../types";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
