@@ -1,5 +1,5 @@
-import Login from "./pages/Login";
-import Signup from "./pages/SignUp";
+import Login from "./screens/Login";
+import Signup from "./screens/SignUp";
 import { Routes, Route } from "react-router";
 
 const GuestApp = () => {

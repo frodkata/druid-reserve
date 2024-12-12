@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Box, Button, TextField, Typography } from "@mui/material";
+import BackgroundContainer from "../../components/UI/BackgroundContainer";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -35,38 +36,40 @@ const Login = () => {
 	};
 
 	return (
-		<Grid container spacing={5} direction="column" alignItems="center">
-			<Box>
-				<TextField
-					id="outlined-basic"
-					label="email"
-					variant="standard"
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-			</Box>
+		<BackgroundContainer backgroundColor="white">
+			<Grid justifyItems="center">
+				<Box>
+					<TextField
+						id="outlined-basic"
+						label="email"
+						variant="standard"
+						onChange={(e) => setEmail(e.target.value)}
+					/>
+				</Box>
 
-			<Box>
-				<TextField
-					id="outlined-basic"
-					label="password"
-					variant="standard"
-					type="password"
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-			</Box>
+				<Box>
+					<TextField
+						id="outlined-basic"
+						label="password"
+						variant="standard"
+						type="password"
+						onChange={(e) => setPassword(e.target.value)}
+					/>
+				</Box>
 
-			<Box>
-				<Button variant="contained" onClick={onLogin}>
-					Login
-				</Button>
-			</Box>
+				<Box>
+					<Button variant="contained" onClick={onLogin}>
+						Login
+					</Button>
+				</Box>
 
-			<Box>
-				<Typography>
-					No account yet? <NavLink to="/signup">Sign up</NavLink>
-				</Typography>
-			</Box>
-		</Grid>
+				<Box>
+					<Typography>
+						No account yet? <NavLink to="/signup">Sign up</NavLink>
+					</Typography>
+				</Box>
+			</Grid>
+		</BackgroundContainer>
 	);
 };
 

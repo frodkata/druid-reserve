@@ -3,6 +3,7 @@ import {
 	Box,
 	Fab,
 	IconButton,
+	Slide,
 	styled,
 	Toolbar,
 	Typography,
@@ -14,6 +15,10 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { Colors } from "../../constants";
 import Logout from "../Logout";
 import LocalParkingIcon from "@mui/icons-material/LocalParking";
+
+interface Props {
+	onBookClick: () => void;
+}
 
 const StyledFab = styled(Fab)({
 	position: "absolute",
@@ -28,7 +33,7 @@ const StyledFab = styled(Fab)({
 	},
 });
 
-const BottomNavBar = () => {
+const BottomNavBar = ({ onBookClick }: Props) => {
 	return (
 		<>
 			<AppBar
@@ -45,7 +50,7 @@ const BottomNavBar = () => {
 					<IconButton color="inherit" aria-label="open drawer">
 						<MenuIcon />
 					</IconButton>
-					<StyledFab color="secondary" aria-label="add">
+					<StyledFab color="secondary" aria-label="add" onClick={onBookClick}>
 						<LocalParkingIcon />
 					</StyledFab>
 					<Box sx={{ flexGrow: 1 }} />
