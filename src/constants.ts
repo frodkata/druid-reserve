@@ -11,4 +11,5 @@ export const Colors = {
 	white: "#FFFFFF",
 	danger: "#C13739",
 	orange: "#E97451",
+	eggShell: "#EEEBD3",
 };

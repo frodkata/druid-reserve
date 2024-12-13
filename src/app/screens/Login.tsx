@@ -6,8 +6,11 @@ import { AuthUser } from "../../types";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import BackgroundContainer from "../../components/UI/BackgroundContainer";
+import GreyGridboxContainer from "../../components/UI/GreyGridboxContainer";
+import SendIcon from "@mui/icons-material/Send";
+import { Colors } from "../../constants";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -36,36 +39,56 @@ const Login = () => {
 	};
 
 	return (
-		<BackgroundContainer backgroundColor="white">
-			<Grid justifyItems="center">
-				<Box>
+		<BackgroundContainer>
+			<Grid
+				justifyItems="center"
+				alignContent="center"
+				sx={{ height: "100vh" }}
+			>
+				<GreyGridboxContainer sx={{ width: "35vh" }}>
 					<TextField
-						id="outlined-basic"
-						label="email"
+						label="Email"
+						color="warning"
 						variant="standard"
+						focused
+						fullWidth
 						onChange={(e) => setEmail(e.target.value)}
 					/>
-				</Box>
+				</GreyGridboxContainer>
 
-				<Box>
+				<GreyGridboxContainer sx={{ width: "35vh" }}>
 					<TextField
 						id="outlined-basic"
-						label="password"
+						label="Password"
+						color="warning"
 						variant="standard"
 						type="password"
+						focused
+						fullWidth
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-				</Box>
+				</GreyGridboxContainer>
 
 				<Box>
-					<Button variant="contained" onClick={onLogin}>
+					<Button
+						variant="text"
+						onClick={onLogin}
+						endIcon={<SendIcon />}
+						sx={{ color: Colors.orange }}
+					>
 						Login
 					</Button>
 				</Box>
 
 				<Box>
-					<Typography>
-						No account yet? <NavLink to="/signup">Sign up</NavLink>
+					<Typography variant="caption" fontWeight="500" color="white">
+						No account yet?{" "}
+						<NavLink
+							to="/signup"
+							style={{ textDecoration: "none", color: Colors.orange }}
+						>
+							Sign up
+						</NavLink>
 					</Typography>
 				</Box>
 			</Grid>

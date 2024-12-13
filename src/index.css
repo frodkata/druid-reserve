@@ -2,4 +2,4 @@ html {
     overflow: hidden;
 }
 
-*::-webkit-scrollbar {display:none;}
+::-webkit-scrollbar {display:none;}

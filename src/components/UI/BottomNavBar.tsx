@@ -1,39 +1,23 @@
-import {
-	AppBar,
-	Box,
-	Fab,
-	IconButton,
-	Slide,
-	styled,
-	Toolbar,
-	Typography,
-} from "@mui/material";
+import { AppBar, Box, Fab, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Colors } from "../../constants";
 import Logout from "../Logout";
 import LocalParkingIcon from "@mui/icons-material/LocalParking";
+import { useState } from "react";
 
 interface Props {
 	onBookClick: () => void;
 }
 
-const StyledFab = styled(Fab)({
-	position: "absolute",
-	backgroundColor: Colors.accentGreen,
-	zIndex: 1,
-	top: -30,
-	left: 0,
-	right: 0,
-	margin: "0 auto",
-	"&:hover": {
-		background: Colors.accentPurple500,
-	},
-});
-
 const BottomNavBar = ({ onBookClick }: Props) => {
+	const [isSelected, setIsSelected] = useState(false);
+
+	const handleChange = () => {
+		onBookClick();
+		setIsSelected((prev) => !prev);
+	};
+
 	return (
 		<>
 			<AppBar
@@ -50,14 +34,29 @@ const BottomNavBar = ({ onBookClick }: Props) => {
 					<IconButton color="inherit" aria-label="open drawer">
 						<MenuIcon />
 					</IconButton>
-					<StyledFab color="secondary" aria-label="add" onClick={onBookClick}>
+					<Fab
+						color="secondary"
+						aria-label="add"
+						onClick={handleChange}
+						sx={{
+							position: "absolute",
+							backgroundColor: isSelected ? Colors.orange : Colors.accentGreen,
+							zIndex: 1,
+							top: -30,
+							left: 0,
+							right: 0,
+							margin: "0 auto",
+							"&:hover": {
+								background: Colors.orange,
+							},
+						}}
+					>
 						<LocalParkingIcon />
-					</StyledFab>
+					</Fab>
 					<Box sx={{ flexGrow: 1 }} />
 					<IconButton color="inherit">
-						<MoreIcon />
+						<Logout />
 					</IconButton>
-					<Logout />
 				</Toolbar>
 			</AppBar>
 		</>

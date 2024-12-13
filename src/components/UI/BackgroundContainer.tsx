@@ -1,5 +1,4 @@
-import Grid from "@mui/material/Grid2";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Colors } from "../../constants";
 
 interface Props {
@@ -15,7 +14,7 @@ const BackgroundContainer = ({ children, backgroundColor }: Props) => {
 				flexDirection: "column",
 				height: "100vh",
 				backgroundColor: backgroundColor || Colors.primary900,
-				overflow: "auto",
+				overflow: "hidden",
 			}}
 		>
 			{children}
