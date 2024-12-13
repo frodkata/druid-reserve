@@ -1,13 +1,13 @@
-import { Button } from "@mui/material";
+import { Button, SxProps, Theme } from "@mui/material";
 import { Colors } from "../../constants";
 
 interface Props {
 	label: string;
-	color?: string;
+	sx?: SxProps<Theme>;
 	onClick?: () => void;
 }
 
-const PrimaryButton = ({ onClick, label, color }: Props) => {
+const PrimaryButton = ({ onClick, label, sx }: Props) => {
 	return (
 		<Button
 			onClick={onClick}
@@ -16,9 +16,10 @@ const PrimaryButton = ({ onClick, label, color }: Props) => {
 				paddingX: 4,
 				borderRadius: 1,
 				fontSize: 20,
-				backgroundColor: color || Colors.accentGreen,
+				backgroundColor: Colors.accentGreen,
 				textTransform: "none",
 				fontWeight: "400",
+				...sx,
 			}}
 		>
 			{label}
