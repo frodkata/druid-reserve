@@ -6,20 +6,30 @@ import { selectUser } from "../../store/reducer-slices";
 import { useSelector } from "react-redux";
 import BackgroundContainer from "../../components/UI/BackgroundContainer";
 import GreyGridboxContainer from "../../components/UI/GreyGridboxContainer";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Drawer, Typography } from "@mui/material";
+import CustomModal from "../../components/UI/CustomModal";
+import { useModal } from "../../hooks/useModal";
+import DrawerContent from "../../components/DrawerContent";
 
 const Home = () => {
 	const user = useSelector(selectUser);
-	const [checked, setChecked] = useState(false);
+	const { isModalOpen, setModalOpen, toggleModal } = useModal();
 
-	const handleChange = () => {
-		setChecked((prev) => !prev);
+	const [isSlideActive, setIsSlideActive] = useState(false);
+	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+	const toggleDrawer = (newOpen: boolean) => () => {
+		setIsDrawerOpen(newOpen);
+	};
+
+	const onReserveButtonClick = () => {
+		setIsSlideActive((prev) => !prev);
 	};
 
 	return (
 		<>
 			<BackgroundContainer>
-				{!checked && (
+				{!isSlideActive && (
 					<>
 						<GreyGridboxContainer>
 							<Box
@@ -71,13 +81,42 @@ const Home = () => {
 								</Typography>
 							</Box>
 						</GreyGridboxContainer>
+						<Button onClick={toggleModal}>Show Modal</Button>
+
+						<CustomModal
+							handleClose={() => setModalOpen(false)}
+							isActive={isModalOpen}
+						>
+							<Typography id="modal-modal-title" variant="h6" component="h2">
+								Just a modal!
+							</Typography>
+						</CustomModal>
 					</>
 				)}
 
-				<SlideUp checked={checked} />
+				<SlideUp
+					isActive={isSlideActive}
+					onSlideClose={() => setIsSlideActive(false)}
+				/>
+				<Drawer
+					open={isDrawerOpen}
+					onClose={toggleDrawer(false)}
+					PaperProps={{
+						sx: {
+							backgroundColor: Colors.accentGreen,
+							borderTopRightRadius: 5,
+							borderBottomRightRadius: 5,
+						},
+					}}
+				>
+					<DrawerContent closeDrawer={() => setIsDrawerOpen(false)} />
+				</Drawer>
 			</BackgroundContainer>
 
-			<BottomNavBar onBookClick={handleChange} />
+			<BottomNavBar
+				onBookClick={onReserveButtonClick}
+				onMenuClick={() => setIsDrawerOpen(true)}
+			/>
 		</>
 	);
 };

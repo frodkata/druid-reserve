@@ -1,6 +1,5 @@
 import { AppBar, Box, Fab, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import { Colors } from "../../constants";
 import Logout from "../Logout";
 import LocalParkingIcon from "@mui/icons-material/LocalParking";
@@ -8,9 +7,10 @@ import { useState } from "react";
 
 interface Props {
 	onBookClick: () => void;
+	onMenuClick: () => void;
 }
 
-const BottomNavBar = ({ onBookClick }: Props) => {
+const BottomNavBar = ({ onBookClick, onMenuClick }: Props) => {
 	const [isSelected, setIsSelected] = useState(false);
 
 	const handleChange = () => {
@@ -31,7 +31,11 @@ const BottomNavBar = ({ onBookClick }: Props) => {
 				}}
 			>
 				<Toolbar>
-					<IconButton color="inherit" aria-label="open drawer">
+					<IconButton
+						color="inherit"
+						aria-label="open drawer"
+						onClick={onMenuClick}
+					>
 						<MenuIcon />
 					</IconButton>
 					<Fab

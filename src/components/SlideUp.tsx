@@ -11,12 +11,14 @@ import { useState } from "react";
 import { Colors } from "../constants";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import GreyGridboxContainer from "./UI/GreyGridboxContainer";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
-	checked: boolean;
+	isActive: boolean;
+	onSlideClose: () => void;
 }
 
-const SlideUp = ({ checked }: Props) => {
+const SlideUp = ({ isActive, onSlideClose }: Props) => {
 	const [highlightedDays, setHighlightedDays] = useState([1, 20, 30]);
 
 	const getDaySpots = (
@@ -44,7 +46,7 @@ const SlideUp = ({ checked }: Props) => {
 	};
 
 	return (
-		<Slide direction="up" in={checked} mountOnEnter unmountOnExit>
+		<Slide direction="up" in={isActive} mountOnEnter unmountOnExit>
 			<Box
 				sx={{
 					background: Colors.accentGreen,
@@ -56,8 +58,8 @@ const SlideUp = ({ checked }: Props) => {
 				}}
 				justifyItems="center"
 			>
-				<GreyGridboxContainer sx={{ width: "100%", justifyContent: "center" }}>
-					<Typography sx={{ fontSize: 40 }} color={Colors.orange}>
+				<GreyGridboxContainer sx={{ justifyContent: "center", px: 10 }}>
+					<Typography sx={{ fontSize: 30 }} color={Colors.orange}>
 						Slot booking
 					</Typography>
 				</GreyGridboxContainer>
@@ -67,9 +69,7 @@ const SlideUp = ({ checked }: Props) => {
 						defaultValue={moment()}
 						views={["day"]}
 						disablePast={true}
-						sx={{
-							width: "80%",
-						}}
+						sx={{}}
 						slots={{
 							day: getDaySpots,
 						}}
@@ -81,11 +81,12 @@ const SlideUp = ({ checked }: Props) => {
 					/>
 				</LocalizationProvider>
 
-				<GreyGridboxContainer sx={{ width: "50%", justifyContent: "center" }}>
+				<GreyGridboxContainer sx={{ justifyContent: "center", px: 10 }}>
 					<Button
 						variant="text"
 						endIcon={<BookmarkAddedIcon />}
 						sx={{ color: Colors.orange, fontSize: 20 }}
+						onClick={onSlideClose}
 					>
 						Book
 					</Button>
