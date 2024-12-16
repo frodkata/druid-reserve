@@ -1,7 +1,14 @@
 // Import the necessary Firebase modules
 import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+	collection,
+	CollectionReference,
+	DocumentData,
+	getFirestore,
+	QueryDocumentSnapshot,
+} from "firebase/firestore";
+import { Booking } from "./types";
 
 // Your Firebase config here
 const firebaseConfig = {
@@ -18,3 +25,10 @@ const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+// This is just a helper to add the type to the db responses
+const createCollection = <T = DocumentData>(collectionName: string) => {
+	return collection(db, collectionName) as CollectionReference<T>;
+};
+
+export const bookingsCollection = createCollection<Booking>("Bookings");

@@ -15,7 +15,6 @@ import SuccessModal from "../../components/UI/SuccessModal";
 import { BookingRequest } from "../../types";
 
 const Home = () => {
-	const user = useSelector(selectUser);
 	const { isModalOpen, setModalOpen, toggleModal } = useModal();
 
 	const [isSlideActive, setIsSlideActive] = useState(false);
@@ -106,7 +105,7 @@ const Home = () => {
 								isActive={isModalOpen}
 								handleClose={() => setModalOpen(false)}
 							>
-								No Error
+								Booking Sucessful!
 							</SuccessModal>
 						)}
 					</>

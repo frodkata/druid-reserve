@@ -13,3 +13,7 @@ export const Colors = {
 	orange: "#E97451",
 	eggShell: "#EEEBD3",
 };
+
+export const FirestoreDocumentName = {
+	bookings: "Bookings",
+};
