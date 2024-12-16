@@ -8,7 +8,7 @@ import {
 	getFirestore,
 	QueryDocumentSnapshot,
 } from "firebase/firestore";
-import { Booking } from "./types";
+import { ParkingDate } from "./types";
 
 // Your Firebase config here
 const firebaseConfig = {
@@ -31,4 +31,5 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 	return collection(db, collectionName) as CollectionReference<T>;
 };
 
-export const bookingsCollection = createCollection<Booking>("Bookings");
+export const parkingDateCollection =
+	createCollection<ParkingDate>("ParkingDates");

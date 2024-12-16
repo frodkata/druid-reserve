@@ -1,4 +1,5 @@
 export interface Booking {
 	userId: string;
-	date: string;
+	email: string;
+	timestamp: Date;
 }

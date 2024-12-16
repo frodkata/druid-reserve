@@ -1,21 +1,16 @@
 import { Slide, Box, Typography, Button, Badge } from "@mui/material";
-import {
-	LocalizationProvider,
-	DateCalendar,
-	PickersDay,
-	PickersDayProps,
-} from "@mui/x-date-pickers";
+import { LocalizationProvider, DateCalendar } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import moment, { Moment } from "moment";
-import { useEffect, useState } from "react";
-import { Colors, FirestoreDocumentName } from "../constants";
+import moment from "moment";
+import { useState } from "react";
+import { Colors } from "../constants";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import GreyGridboxContainer from "./UI/GreyGridboxContainer";
-import { Booking, BookingRequest } from "../types";
+import { BookingRequest, Booking } from "../types";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store/reducer-slices";
-import { addDoc, getDocs } from "firebase/firestore";
-import { bookingsCollection, db } from "../firebaseConfig";
+import { addDoc, doc, getDocs, setDoc, arrayUnion } from "firebase/firestore";
+import { db, parkingDateCollection } from "../firebaseConfig";
 import { FirebaseError } from "@firebase/util";
 
 interface Props {
@@ -26,25 +21,27 @@ interface Props {
 const SlideUp = ({ isActive, onBookSubmit }: Props) => {
 	const user = useSelector(selectUser);
 
-	const [selectedDate, setSelectedDate] = useState("");
-	const [bookingsForDate, setBookingsForDate] = useState<Booking[]>([]);
+	const [selectedDate, setSelectedDate] = useState(moment().toDate());
 
-	const fetchBookingsForDate = async (date: string) => {
-		const bookings: Booking[] = [];
-		await getDocs(bookingsCollection).then((querySnapshot) => {
-			querySnapshot.docs.forEach((booking) => {
-				booking.data().date === date && bookings.push(booking.data());
-			});
-		});
-
-		return bookings;
-	};
-
-	const persistBooking = async () => {
-		await addDoc(bookingsCollection, {
+	const persistDate = async () => {
+		const slotBookings: Booking = {
+			email: user.email!,
 			userId: user.uid,
-			date: selectedDate,
-		})
+			timestamp: moment(new Date()).toDate(),
+		};
+
+		const parkingDateDocRef = doc(
+			parkingDateCollection,
+			moment(selectedDate).format("MM-DD-YYYY")
+		);
+
+		setDoc(
+			parkingDateDocRef,
+			{
+				slotBookings: arrayUnion(slotBookings),
+			},
+			{ merge: true }
+		)
 			.then(() => {
 				onBookSubmit({
 					hasAnyErrors: false,
@@ -58,45 +55,6 @@ const SlideUp = ({ isActive, onBookSubmit }: Props) => {
 				});
 			});
 	};
-
-	const runBookingValidation = async (date: string, userId: string) => {
-		const bookingsForSelectedDate = await fetchBookingsForDate(date);
-
-		if (bookingsForSelectedDate.length > 8) {
-			throw new Error("Date is fully booked!");
-		}
-
-		if (
-			bookingsForSelectedDate.find(
-				(booking: Booking) => booking.userId === userId
-			)
-		) {
-			throw new Error("You cannot book twice for a given day!");
-		}
-	};
-
-	const onBookButtonClick = async () => {
-		try {
-			await runBookingValidation(selectedDate, user.uid);
-			return persistBooking();
-		} catch (error: any) {
-			onBookSubmit({
-				hasAnyErrors: true,
-				errorMessage: error.message,
-			});
-		}
-	};
-
-	useEffect(() => {
-		(async () => {
-			const bookings = await fetchBookingsForDate(selectedDate);
-			setBookingsForDate(bookings);
-		})();
-
-		return () => {
-			// this now gets called when the component unmounts
-		};
-	}, [selectedDate]);
 
 	return (
 		<Slide direction="up" in={isActive} mountOnEnter unmountOnExit>
@@ -123,26 +81,16 @@ const SlideUp = ({ isActive, onBookSubmit }: Props) => {
 						views={["day"]}
 						disablePast={true}
 						sx={{}}
-						onChange={(date: any) =>
-							setSelectedDate(moment(date).format("MM/DD/YYYY"))
-						}
+						onChange={(date: any) => setSelectedDate(moment(date).toDate())}
 					/>
 				</LocalizationProvider>
-
-				<GreyGridboxContainer sx={{ justifyContent: "center", px: 10 }}>
-					{bookingsForDate.map((booking, index) => (
-						<Typography sx={{ fontSize: 10 }} color={Colors.orange} key={index}>
-							{booking.userId}
-						</Typography>
-					))}
-				</GreyGridboxContainer>
 
 				<GreyGridboxContainer sx={{ justifyContent: "center", px: 10 }}>
 					<Button
 						variant="text"
 						endIcon={<BookmarkAddedIcon />}
 						sx={{ color: Colors.orange, fontSize: 20 }}
-						onClick={onBookButtonClick}
+						onClick={persistDate}
 					>
 						Book
 					</Button>
