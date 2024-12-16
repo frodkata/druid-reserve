@@ -11,14 +11,14 @@ import { useState } from "react";
 import { Colors } from "../constants";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import GreyGridboxContainer from "./UI/GreyGridboxContainer";
-import { useNavigate } from "react-router-dom";
+import { BookingRequest } from "../types";
 
 interface Props {
 	isActive: boolean;
-	onSlideClose: () => void;
+	onBookSubmit: (bookingRequest: BookingRequest) => void;
 }
 
-const SlideUp = ({ isActive, onSlideClose }: Props) => {
+const SlideUp = ({ isActive, onBookSubmit }: Props) => {
 	const [highlightedDays, setHighlightedDays] = useState([1, 20, 30]);
 
 	const getDaySpots = (
@@ -86,7 +86,12 @@ const SlideUp = ({ isActive, onSlideClose }: Props) => {
 						variant="text"
 						endIcon={<BookmarkAddedIcon />}
 						sx={{ color: Colors.orange, fontSize: 20 }}
-						onClick={onSlideClose}
+						onClick={() =>
+							onBookSubmit({
+								hasAnyErrors: true,
+								errorMessage: "Error saving ",
+							})
+						}
 					>
 						Book
 					</Button>

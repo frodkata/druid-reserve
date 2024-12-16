@@ -10,6 +10,9 @@ import { Box, Button, Drawer, Typography } from "@mui/material";
 import CustomModal from "../../components/UI/CustomModal";
 import { useModal } from "../../hooks/useModal";
 import DrawerContent from "../../components/DrawerContent";
+import ErrorModal from "../../components/UI/ErrorModal";
+import SuccessModal from "../../components/UI/SuccessModal";
+import { BookingRequest } from "../../types";
 
 const Home = () => {
 	const user = useSelector(selectUser);
@@ -17,6 +20,9 @@ const Home = () => {
 
 	const [isSlideActive, setIsSlideActive] = useState(false);
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+	const [bookingRequest, setBookingRequest] = useState<
+		BookingRequest | undefined
+	>(undefined);
 
 	const toggleDrawer = (newOpen: boolean) => () => {
 		setIsDrawerOpen(newOpen);
@@ -24,6 +30,12 @@ const Home = () => {
 
 	const onReserveButtonClick = () => {
 		setIsSlideActive((prev) => !prev);
+	};
+
+	const onBookSubmit = (bookingRequest: BookingRequest) => {
+		setBookingRequest(bookingRequest);
+		setIsSlideActive(false);
+		toggleModal();
 	};
 
 	return (
@@ -81,29 +93,32 @@ const Home = () => {
 								</Typography>
 							</Box>
 						</GreyGridboxContainer>
-						<Button onClick={toggleModal}>Show Modal</Button>
 
-						<CustomModal
-							handleClose={() => setModalOpen(false)}
-							isActive={isModalOpen}
-						>
-							<Typography id="modal-modal-title" variant="h6" component="h2">
-								Just a modal!
-							</Typography>
-						</CustomModal>
+						{bookingRequest?.hasAnyErrors ? (
+							<ErrorModal
+								isActive={isModalOpen}
+								handleClose={() => setModalOpen(false)}
+							>
+								{bookingRequest.errorMessage}
+							</ErrorModal>
+						) : (
+							<SuccessModal
+								isActive={isModalOpen}
+								handleClose={() => setModalOpen(false)}
+							>
+								No Error
+							</SuccessModal>
+						)}
 					</>
 				)}
 
-				<SlideUp
-					isActive={isSlideActive}
-					onSlideClose={() => setIsSlideActive(false)}
-				/>
+				<SlideUp isActive={isSlideActive} onBookSubmit={onBookSubmit} />
 				<Drawer
 					open={isDrawerOpen}
 					onClose={toggleDrawer(false)}
 					PaperProps={{
 						sx: {
-							backgroundColor: Colors.accentGreen,
+							backgroundColor: Colors.primary700,
 							borderTopRightRadius: 5,
 							borderBottomRightRadius: 5,
 						},
