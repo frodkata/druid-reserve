@@ -1,24 +1,16 @@
-import {
-	Box,
-	List,
-	ListItem,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	Divider,
-	Typography,
-	Button,
-} from "@mui/material";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import Grid from "@mui/material/Grid2";
+import { Box, Button } from "@mui/material";
 import { Colors } from "../constants";
+import { useNavigate } from "react-router-dom";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 interface Props {
 	closeDrawer: () => void;
 }
 
 const DrawerContent = ({ closeDrawer }: Props) => {
+	const navigate = useNavigate();
+
 	return (
 		<Box sx={{ p: 1 }} role="presentation" onClick={closeDrawer}>
 			<Box
@@ -34,7 +26,7 @@ const DrawerContent = ({ closeDrawer }: Props) => {
 				</Button>
 			</Box>
 			<Box
-				onClick={() => console.log("My Bookings")}
+				onClick={() => navigate("/myBookings")}
 				sx={{ display: "flex", mt: 2 }}
 			>
 				<Button
@@ -46,27 +38,18 @@ const DrawerContent = ({ closeDrawer }: Props) => {
 				</Button>
 			</Box>
 
-			{/* <List>
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon>
-							<MenuIcon />
-						</ListItemIcon>
-						<ListItemText primary={"afsfasfasfasf"} />
-					</ListItemButton>
-				</ListItem>
-			</List>
-			<Divider />
-			<List>
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon>
-							<MenuIcon />
-						</ListItemIcon>
-						<ListItemText primary={"adsdasda"} />
-					</ListItemButton>
-				</ListItem>
-			</List> */}
+			<Box
+				onClick={() => console.log("My Bookings")}
+				sx={{ display: "flex", mt: 2 }}
+			>
+				<Button
+					variant="text"
+					endIcon={<BookmarksIcon />}
+					sx={{ color: Colors.orange }}
+				>
+					Booking History
+				</Button>
+			</Box>
 		</Box>
 	);
 };

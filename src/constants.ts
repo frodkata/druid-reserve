@@ -14,6 +14,4 @@ export const Colors = {
 	eggShell: "#EEEBD3",
 };
 
-export const FirestoreDocumentName = {
-	bookings: "Bookings",
-};
+export const AVAILABLE_SLOTS = 9;

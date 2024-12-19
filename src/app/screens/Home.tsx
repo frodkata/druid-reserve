@@ -1,18 +1,19 @@
 import SlideUp from "../../components/SlideUp";
-import { Colors } from "../../constants";
-import { useState } from "react";
+import { AVAILABLE_SLOTS, Colors } from "../../constants";
+import { useEffect, useState } from "react";
 import BottomNavBar from "../../components/UI/BottomNavBar";
-import { selectUser } from "../../store/reducer-slices";
-import { useSelector } from "react-redux";
 import BackgroundContainer from "../../components/UI/BackgroundContainer";
 import GreyGridboxContainer from "../../components/UI/GreyGridboxContainer";
-import { Box, Button, Drawer, Typography } from "@mui/material";
-import CustomModal from "../../components/UI/CustomModal";
+import { Box, Drawer, Typography } from "@mui/material";
 import { useModal } from "../../hooks/useModal";
 import DrawerContent from "../../components/DrawerContent";
 import ErrorModal from "../../components/UI/ErrorModal";
 import SuccessModal from "../../components/UI/SuccessModal";
-import { BookingRequest } from "../../types";
+import { Booking, BookingRequest } from "../../types";
+import { doc, getDoc } from "firebase/firestore";
+import moment from "moment";
+import { parkingDateCollection } from "../../firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
 	const { isModalOpen, setModalOpen, toggleModal } = useModal();
@@ -22,6 +23,7 @@ const Home = () => {
 	const [bookingRequest, setBookingRequest] = useState<
 		BookingRequest | undefined
 	>(undefined);
+	const [bookingsForDate, setBookingsForDate] = useState<Booking[]>([]);
 
 	const toggleDrawer = (newOpen: boolean) => () => {
 		setIsDrawerOpen(newOpen);
@@ -36,6 +38,28 @@ const Home = () => {
 		setIsSlideActive(false);
 		toggleModal();
 	};
+
+	const getBookingsForDate = async (date: Date) => {
+		const parkingDateDocRef = doc(
+			parkingDateCollection,
+			moment(date).format("MM-DD-YYYY")
+		);
+
+		const parkingDateDocSnap = await getDoc(parkingDateDocRef);
+
+		return parkingDateDocSnap.data()?.slotBookings;
+	};
+
+	const calculateAvailiableSpaces = () => {
+		return AVAILABLE_SLOTS - bookingsForDate.length;
+	};
+
+	useEffect(() => {
+		(async () => {
+			const bookings = await getBookingsForDate(moment(new Date()).toDate());
+			setBookingsForDate(bookings || []);
+		})();
+	}, [isSlideActive]);
 
 	return (
 		<>
@@ -55,14 +79,17 @@ const Home = () => {
 								}}
 							>
 								<Typography variant="h2" fontWeight="500">
-									Green Zone haters:
+									Bookings today:
 								</Typography>
-								<Typography variant="caption" fontWeight="500">
-									ivan.backrachev@abx.com:
+								<Typography variant="body1" fontWeight="500">
+									{moment(new Date()).format("DD MMMM y")}
 								</Typography>
-								<Typography variant="caption" fontWeight="500">
-									ivan.backrachev@abx.com:
-								</Typography>
+								{bookingsForDate &&
+									bookingsForDate.map((booking, index) => (
+										<Typography key={index} variant="caption" fontWeight="500">
+											{booking.email}
+										</Typography>
+									))}
 							</Box>
 						</GreyGridboxContainer>
 						<GreyGridboxContainer>
@@ -88,7 +115,7 @@ const Home = () => {
 									fontWeight="900"
 									sx={{ color: Colors.orange }}
 								>
-									2
+									{calculateAvailiableSpaces()}
 								</Typography>
 							</Box>
 						</GreyGridboxContainer>
