@@ -2,8 +2,7 @@ import { Box, Button } from "@mui/material";
 import { Colors } from "../constants";
 import { useNavigate } from "react-router-dom";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-
+import ExploreIcon from "@mui/icons-material/Explore";
 interface Props {
 	closeDrawer: () => void;
 }
@@ -27,15 +26,15 @@ const DrawerContent = ({ closeDrawer }: Props) => {
 			</Box>
 
 			<Box
-				onClick={() => console.log("My Bookings")}
+				onClick={() => navigate("/bookingHistory")}
 				sx={{ display: "flex", mt: 2 }}
 			>
 				<Button
 					variant="text"
-					endIcon={<BookmarksIcon />}
+					endIcon={<ExploreIcon />}
 					sx={{ color: Colors.orange }}
 				>
-					Booking History
+					Booking Explorer
 				</Button>
 			</Box>
 		</Box>
