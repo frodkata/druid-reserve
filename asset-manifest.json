@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/druid-reserve/static/css/main.83e92931.css",
-    "main.js": "/druid-reserve/static/js/main.b6ea1c5c.js",
+    "main.js": "/druid-reserve/static/js/main.fc2ac129.js",
     "index.html": "/druid-reserve/index.html",
     "main.83e92931.css.map": "/druid-reserve/static/css/main.83e92931.css.map",
-    "main.b6ea1c5c.js.map": "/druid-reserve/static/js/main.b6ea1c5c.js.map"
+    "main.fc2ac129.js.map": "/druid-reserve/static/js/main.fc2ac129.js.map"
   },
   "entrypoints": [
     "static/css/main.83e92931.css",
-    "static/js/main.b6ea1c5c.js"
+    "static/js/main.fc2ac129.js"
   ]
 }
