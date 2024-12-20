@@ -38,7 +38,7 @@ const MyBookings = () => {
 				(booking) => booking.userId === user.uid
 			);
 
-			if (moment().isSameOrAfter(moment(doc.id)) && bookingRelatedToUser) {
+			if (moment(doc.id).isSameOrAfter(moment(), "D") && bookingRelatedToUser) {
 				bookingDates.push(moment(doc.id).toDate());
 			}
 		});
