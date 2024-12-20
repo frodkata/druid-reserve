@@ -152,19 +152,6 @@ const SlideUp = ({ isActive, onBookSubmit }: Props) => {
 					</Typography>
 				)}
 
-				{/* {!!bookingsForDate && (
-					<>
-						<Typography sx={{ fontSize: 30 }} color={Colors.orange}>
-							Booked spaces:
-						</Typography>
-						{bookingsForDate.map((booking, index) => (
-							<Typography key={index} color={Colors.primary900}>
-								{booking.email}
-							</Typography>
-						))}
-					</>
-				)} */}
-
 				<GreyGridboxContainer sx={{ justifyContent: "center", px: 10 }}>
 					<Button
 						variant="text"
