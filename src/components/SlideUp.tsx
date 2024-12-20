@@ -89,7 +89,7 @@ const SlideUp = ({ isActive, onBookSubmit }: Props) => {
 		) {
 			return onBookSubmit({
 				hasAnyErrors: true,
-				errorMessage: "You`ve already reserved this slot!",
+				errorMessage: "You already have a reservation!",
 			});
 		}
 

@@ -14,9 +14,12 @@ import { doc, getDoc } from "firebase/firestore";
 import moment from "moment";
 import { parkingDateCollection } from "../../firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../../hooks/useLoader";
+import CustomLoader from "../../components/UI/CustomLoader";
 
 const Home = () => {
 	const { isModalOpen, setModalOpen, toggleModal } = useModal();
+	const { loading, setLoading } = useLoader();
 
 	const [isSlideActive, setIsSlideActive] = useState(false);
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -36,7 +39,13 @@ const Home = () => {
 	const onBookSubmit = (bookingRequest: BookingRequest) => {
 		setBookingRequest(bookingRequest);
 		setIsSlideActive(false);
-		toggleModal();
+
+		setLoading(true);
+
+		setTimeout(() => {
+			toggleModal();
+			setLoading(false);
+		}, 1000);
 	};
 
 	const getBookingsForDate = async (date: Date) => {
@@ -119,6 +128,27 @@ const Home = () => {
 								</Typography>
 							</Box>
 						</GreyGridboxContainer>
+
+						{loading && (
+							<Box
+								sx={{
+									display: "flex",
+									alignItems: "center",
+									flexDirection: "column",
+									my: 3,
+								}}
+							>
+								<CustomLoader
+									sx={{
+										color: Colors.orange,
+										my: 3,
+									}}
+								/>
+								<Typography variant="caption" color={Colors.orange}>
+									Saving booking....
+								</Typography>
+							</Box>
+						)}
 
 						{bookingRequest?.hasAnyErrors ? (
 							<ErrorModal

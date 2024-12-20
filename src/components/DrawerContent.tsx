@@ -14,18 +14,6 @@ const DrawerContent = ({ closeDrawer }: Props) => {
 	return (
 		<Box sx={{ p: 1 }} role="presentation" onClick={closeDrawer}>
 			<Box
-				onClick={() => console.log("Profile")}
-				sx={{ display: "flex", mt: 2 }}
-			>
-				<Button
-					variant="text"
-					endIcon={<AccountBoxIcon />}
-					sx={{ color: Colors.orange }}
-				>
-					My Profile
-				</Button>
-			</Box>
-			<Box
 				onClick={() => navigate("/myBookings")}
 				sx={{ display: "flex", mt: 2 }}
 			>

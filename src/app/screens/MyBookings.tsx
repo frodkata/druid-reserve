@@ -1,12 +1,6 @@
 import BackgroundContainer from "../../components/UI/BackgroundContainer";
 import HomeIcon from "@mui/icons-material/Home";
-import {
-	Box,
-	Button,
-	CircularProgress,
-	Stack,
-	Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Colors } from "../../constants";
 import { useNavigate } from "react-router-dom";
 import GreyGridboxContainer from "../../components/UI/GreyGridboxContainer";
@@ -67,19 +61,15 @@ const MyBookings = () => {
 				email: user.email,
 				userId: user.uid,
 			} as Booking),
+		}).then(() => {
+			setLoading(true);
+
+			setTimeout(async () => {
+				toggleModal();
+				setBookingDates(await loadBookings());
+				setLoading(false);
+			}, 1000);
 		});
-
-		setLoading(true);
-
-		setTimeout(() => {
-			toggleModal();
-			setBookingDates(
-				bookingDates.filter(
-					(bookingDate) => moment(bookingDate) === moment(date)
-				)
-			);
-			setLoading(false);
-		}, 1000);
 	};
 
 	useEffect(() => {
@@ -87,7 +77,6 @@ const MyBookings = () => {
 			const bookingDates = await loadBookings();
 
 			setLoading(true);
-
 			setTimeout(() => {
 				setBookingDates((oldUserBookings) => [
 					...oldUserBookings,
@@ -127,13 +116,27 @@ const MyBookings = () => {
 							backgroundColor: Colors.accentGreen,
 						}}
 					>
-						<Typography
-							variant="h2"
-							fontWeight="500"
-							sx={{ color: Colors.primary700, mb: 2 }}
-						>
-							Active Bookings:
-						</Typography>
+						<Box>
+							<Typography
+								variant="h2"
+								fontWeight="500"
+								sx={{
+									color: Colors.primary700,
+									my: 2,
+									backgroundColor: Colors.accentGreen,
+								}}
+							>
+								Active Bookings:
+							</Typography>
+
+							{loading && (
+								<CustomLoader
+									sx={{
+										color: Colors.orange,
+									}}
+								/>
+							)}
+						</Box>
 
 						{bookingDates.map((date, index) => (
 							<Box sx={{ mt: 1 }}>
@@ -162,8 +165,6 @@ const MyBookings = () => {
 			>
 				Reservation deleted!
 			</SuccessModal>
-
-			{loading && <CustomLoader />}
 		</BackgroundContainer>
 	);
 };

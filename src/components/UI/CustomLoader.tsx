@@ -1,4 +1,10 @@
-import { CircularProgress, SxProps, Theme } from "@mui/material";
+import {
+	Box,
+	CircularProgress,
+	SxProps,
+	Theme,
+	Typography,
+} from "@mui/material";
 import { Colors } from "../../constants";
 
 interface Props {
@@ -9,10 +15,7 @@ const CustomLoader = ({ sx }: Props) => {
 		<CircularProgress
 			sx={{
 				color: Colors.accentGreen,
-				position: "absolute",
 				zIndex: 1,
-				top: "50%",
-				left: "50%",
 				...sx,
 			}}
 		/>
