@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.83e92931.css","mappings":"AAAA,KACI,eACJ,CAEA,oBAAqB,YAAa","sources":["index.css"],"sourcesContent":["html {\n    overflow: hidden;\n}\n\n::-webkit-scrollbar {display:none;}\n"],"names":[],"sourceRoot":""}
