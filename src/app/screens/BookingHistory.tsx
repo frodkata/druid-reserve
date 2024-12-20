@@ -88,11 +88,16 @@ const BookingHistory = () => {
 								mb: 2,
 							}}
 						>
-							{bookings.length > 0 && (
+							{bookings.length > 0 ? (
 								<Typography variant="body1" sx={{ fontWeight: "900" }}>
 									Past bookings:
 								</Typography>
+							) : (
+								<Typography variant="body1" sx={{ fontWeight: "900" }}>
+									No booked slots.
+								</Typography>
 							)}
+
 							{bookings.map((booking, index) => (
 								<Typography variant="body1" key={index}>
 									{booking.email}
