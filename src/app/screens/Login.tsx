@@ -53,6 +53,9 @@ const Login = () => {
 						focused
 						fullWidth
 						onChange={(e) => setEmail(e.target.value)}
+						sx={{
+							input: { color: Colors.orange },
+						}}
 					/>
 				</GreyGridboxContainer>
 
@@ -66,6 +69,9 @@ const Login = () => {
 						focused
 						fullWidth
 						onChange={(e) => setPassword(e.target.value)}
+						sx={{
+							input: { color: Colors.orange },
+						}}
 					/>
 				</GreyGridboxContainer>
 

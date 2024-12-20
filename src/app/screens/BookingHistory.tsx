@@ -7,16 +7,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import { LocalizationProvider, DateCalendar } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import moment from "moment";
-import { doc, getDoc, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { parkingDateCollection } from "../../firebaseConfig";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/reducer-slices";
 import { useState } from "react";
 import { Booking } from "../../types";
 
 const BookingHistory = () => {
 	const navigate = useNavigate();
-	const user = useSelector(selectUser);
 
 	const [bookings, setSlotBookings] = useState<Booking[]>([]);
 

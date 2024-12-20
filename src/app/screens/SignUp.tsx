@@ -50,6 +50,9 @@ const Signup = () => {
 						focused
 						fullWidth
 						onChange={(e) => setEmail(e.target.value)}
+						sx={{
+							input: { color: Colors.orange },
+						}}
 					/>
 				</GreyGridboxContainer>
 				<GreyGridboxContainer sx={{ width: "35vh" }}>
@@ -62,6 +65,9 @@ const Signup = () => {
 						focused
 						fullWidth
 						onChange={(e) => setPassword(e.target.value)}
+						sx={{
+							input: { color: Colors.orange },
+						}}
 					/>
 				</GreyGridboxContainer>
 				<GreyGridboxContainer sx={{ width: "35vh", justifyContent: "center" }}>
@@ -74,6 +80,9 @@ const Signup = () => {
 						focused
 						fullWidth
 						onChange={(e) => setPasswordMatch(e.target.value === password)}
+						sx={{
+							input: { color: Colors.orange },
+						}}
 					/>
 					<Typography variant="caption" color="error">
 						{!passwordMatch && <p>Passwords do not match</p>}
