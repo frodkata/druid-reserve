@@ -38,11 +38,7 @@ const MyBookings = () => {
 				(booking) => booking.userId === user.uid
 			);
 
-			if (
-				moment(doc.id).format("DD-MM-YYYY") >=
-					moment(new Date()).format("DD-MM-YYYY") &&
-				bookingRelatedToUser
-			) {
+			if (moment().isSameOrAfter(moment(doc.id)) && bookingRelatedToUser) {
 				bookingDates.push(moment(doc.id).toDate());
 			}
 		});
@@ -122,12 +118,13 @@ const MyBookings = () => {
 								fontWeight="500"
 								sx={{
 									color: Colors.primary700,
-									my: 2,
+									mt: 2,
 									backgroundColor: Colors.accentGreen,
 								}}
 							>
 								Active Bookings:
 							</Typography>
+							<Typography variant="caption">{`(Click to remove)`}</Typography>
 
 							{loading && (
 								<CustomLoader
