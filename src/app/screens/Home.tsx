@@ -90,7 +90,7 @@ const Home = () => {
 								<Typography variant="h2" fontWeight="500">
 									Bookings today:
 								</Typography>
-								<Typography variant="body1" fontWeight="500">
+								<Typography variant="body1" fontWeight="800">
 									{moment(new Date()).format("DD MMMM y")}
 								</Typography>
 								{bookingsForDate &&
