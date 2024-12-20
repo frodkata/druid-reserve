@@ -125,15 +125,15 @@ const MyBookings = () => {
 								Active Bookings:
 							</Typography>
 							<Typography variant="caption">{`(Click to remove)`}</Typography>
-
-							{loading && (
-								<CustomLoader
-									sx={{
-										color: Colors.orange,
-									}}
-								/>
-							)}
 						</Box>
+
+						{loading && (
+							<CustomLoader
+								sx={{
+									color: Colors.orange,
+								}}
+							/>
+						)}
 
 						{bookingDates.map((date, index) => (
 							<Box sx={{ mt: 1 }}>
